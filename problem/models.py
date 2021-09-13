@@ -52,8 +52,7 @@ class Problem(models.Model):
         all_c = self.submission_set.count()
         if all_c != 0:
             return round(ac * 100 / all_c, 1)
-        else:
-            return 0
+        return 0
 
     @property
     def ac_subs(self):

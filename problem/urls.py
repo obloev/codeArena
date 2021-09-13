@@ -1,5 +1,5 @@
 from django.urls import path
-from problem.views import *
+from problem.views import all_problem, problem_create_view, ProblemView
 
 app_name = 'problem'
 

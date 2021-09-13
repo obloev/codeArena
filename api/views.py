@@ -23,4 +23,3 @@ class SubmissionAPIDetailView(RetrieveAPIView):
     lookup_field = 'id'
     queryset = Submission.objects.all()
     serializer_class = SubmissionDetailSerializer
-
