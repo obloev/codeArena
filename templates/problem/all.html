@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-md-8 m-auto">
+        <div class="table-responsive">
+            <table class='table table-striped'>
+                <tr>
+                    <td colspan="7" class="text-center fw-bold fs-5 t-blue">
+                        Masalalar
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'problem:create' %}"
+                               style="margin-left: 10px; padding: 2px 5px;"
+                               class="btn btn-primary bg-blue fw-bold">
+                                Yangi masala tuzish
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th>Nomi</th>
+                    <th>Daraja</th>
+                    <th><i class="fas fa-star-half-alt"></i></th>
+                    <th>%</th>
+                </tr>
+                {% for problem in problems %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'problem:problem' problem.id %}" class="t-blue">
+                                {{ problem.id }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if problem.id in ac_attempts %}
+                                <span class="t-green">
+                                    <i class="fas fa-check-circle"></i>
+                                </span>
+                            {% elif problem.id in attempts %}
+                                <span class="t-red">
+                                    <i class="fas fa-times-circle"></i>
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'problem:problem' problem.id %}" class="t-blue">
+                                {{ problem.title }}
+                            </a>
+                        </td>
+                        <td >
+                            <span class="fw-bold">
+                                {{ problem.level }}
+                            </span>
+                        </td>
+                        <td class="fw-bold">{{ problem.submission_set.count }}</td>
+                        <td>{{ problem.ac_rate }} %</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock content %}

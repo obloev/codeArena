@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-md-9 col-lg-9 m-auto">
+        <div class="card shadow bor bg-blue">
+            <div class="icon2 text-white">
+                <i class="fas center fa-laptop-code"></i>
+            </div>
+            <div class="card-body" style="padding-left: 90px;">
+                <p class="text-end fs-5 text-white">Saytga xush kelibsiz!</p>
+                <p class="text-end text-white">
+                    Bu sayt dasturlash sohasidagi bilimlaringizni sinab ko'rishda yordam beradi
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold fs-3">{{ us_c }}</p>
+                        <p>Foydalanuvchilar soni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold fs-3">{{ pr_c }}</p>
+                        <p>Masalalar soni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold fs-3">{{ sb_c }}</p>
+                        <p>Urinishlar soni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 30px">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold text-center fs-5">TOP 3 Foydalanuvchilar</p><br>
+                        <table class="table">
+                            {% for user in lb %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <a class="t-blue fw-bold" href="{% url 'profile' user.username %}">
+                                            {{ user.username }}
+                                        </a>
+                                    </td>
+                                    <td class="fw-bold">{{ user.score }}
+                                        <i class="fas fa-star"></i>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 30px">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold text-center fs-5">TOP 3 Masalalar</p><br>
+                        <table class="table">
+                            {% for pr_l in top_3_pr %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <a class="t-blue fw-bold" href="{% url 'problem:problem' pr_l.1 %}">
+                                            {{ pr_l.2 }}
+                                        </a>
+                                    </td>
+                                    <td class="fw-bold">{{ pr_l.0 }} ta urinish</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

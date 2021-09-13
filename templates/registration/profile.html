@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-md-9 col-lg-9 m-auto">
+        <div class="card shadow bor bg-blue">
+            <div class="icon2 text-white">
+                <i class="fas center fa-user"></i>
+            </div>
+            <div class="card-body" style="padding-left: 90px;">
+                <p class="text-end fs-5 text-white">{{ user }}</p>
+                <p class="text-end text-white">
+                    {{ user.score }} <i class="fas fa-star"></i>
+                    <i class="fas fa-crown" style="margin-left: 10px"></i>
+                    {{ rate }}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold fs-3">{{ ac_p|length }}</p>
+                        <p>Yechgan masalalari soni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        <p class="fw-bold fs-3">{{ s_count }}</p>
+                        <p>Urinishlar soni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 25px">
+                <div class="card text-center shadow border-0">
+                    <div class="card-body">
+                        {% if ac_p|length %}
+                            <p class="fw-bold fs-5" style="margin-bottom: 10px;">
+                                Yechgan masalalari
+                            </p>
+                            <p>
+                                {% for p in ac_p %}
+                                    <a class="badge bg-white border border-primary t-blue fs-6"
+                                       href="{% url 'problem:problem' p %}">
+                                        {{ p }}
+                                    </a>
+                                {% endfor %}
+                            </p>
+                        {% else %}
+                            <p class="fw-bold fs-5" style="margin-bottom: 10px;">
+                                Hali birorta masala yechmagan
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 30px">
+            <table class='table table-striped'>
+                <tr>
+                    <td colspan="7" class="text-center fw-bold fs-5 t-blue">
+                        Oxirgi urinishlari
+                    </td>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Masala</th>
+                    <th>Natija</th>
+                    <th>Til</th>
+                    <th>Xotira</th>
+                    <th>Vaqt</th>
+                </tr>
+                {% for submission in submissions %}
+                    <tr>
+                        <td>
+                            {% if submission.author == request.user %}
+                                <a href="{% url 'attempt:get' submission.id %}" class="t-blue">
+                                    {{ submission.id }}
+                                </a>
+                            {% else %}
+                                {{ submission.id }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'problem:problem' submission.problem.id %}" class="t-blue">
+                                {{ submission.problem.title }}
+                            </a>
+                        </td>
+                        {% if submission.status_id == 3 %}
+                            <td class='t-green status'>{{ submission.status }}</td>
+                        {% else %}
+                            <td class='t-red status'>{{ submission.status }}</td>
+                        {% endif %}
+                        <td><b>{{ submission.language }}</b></td>
+                        <td>{{ submission.memory }} KB</td>
+                        <td>{{ submission.time }} ms</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-md-9 col-lg-9 m-auto">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <p class="fs-6 fw-bold text-muted">Masala {{ problem.id }}</p>
+                <p class="fs-4 fw-bold">{{ problem.title }}</p>
+                <p>{{ problem.desc }}</p><br>
+                <p class="fs-5 t-blue fw-bold">Kiruvchi ma'lumotlar</p>
+                <p>{{ problem.input_info }}</p><br>
+                <p class="fs-5 t-blue fw-bold">Chiquvchi ma'lumotlar</p>
+                <p>{{ problem.output_info }}</p><br>
+                <p class="fs-5 t-blue fw-bold">Misollar</p>
+                <table class="table">
+                    <tr>
+                        <td class="fw-bold">Kirish</td>
+                        <td class="fw-bold">Chiqish</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">{{ problem.get_ins.1 | linebreaks }}</td>
+                        <td class="mono">{{ problem.get_outs.1 | linebreaks }}</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">{{ problem.get_ins.2 | linebreaks }}</td>
+                        <td class="mono">{{ problem.get_outs.2 | linebreaks }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        {% if request.user.is_authenticated %}
+            <p class="d-grid gap-2 text-center fs-5 t-blue fw-bold"
+               style="margin-top: 30px">
+                Yechimni yuborish
+            </p>
+            <form action="{% url 'attempt:create' %}" method='POST'>
+                {% csrf_token %}
+                <input style='display:none' value="{{ problem.id }}" name='problem_id'>
+                <select name='lang' style="margin-top: 30px;" class='form-control' onchange='changeLang()' id='langu'>
+                    <option value='50'>C (GCC 9.2.0)</option>
+                    <option value='54'>C++ (GCC 9.2.0)</option>
+                    <option value='51'>C# (Mono 6.6.0.161)</option>
+                    <option value='62'>Java (OpenJDK 13.0.1)</option>
+                    <option value='63'>JavaScript (Node.js 12.14.0)</option>
+                    <option value='78'>Kotlin (1.3.70)</option>
+                    <option value='67'>Pascal (FPC 3.0.4)</option>
+                    <option value='68'>PHP (7.4.1)</option>
+                    <option value='71' selected="selected">Python (3.8.1)</option>
+                </select>
+                <textarea name='code' id='editor'></textarea>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary bg-blue fw-bold" type="submit"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            style='margin-top: 10px'>
+                        Jo'natish
+                    </button>
+                </div>
+            </form>
+        {% else %}
+            <p class="text-center fs-5" style="margin-top: 30px">
+                Masalani ishlash uchun tizimga
+                <a href="{% url 'login' %}" class="t-blue">kiring</a>
+            </p>
+        {% endif %}
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <div class="modal-body">
+                        <div class="d-flex align-items-center">
+                            <strong class="fs-5">Tekshirilmoqda...</strong>
+                            <div class="spinner-border ms-auto t-blue" role="status"
+                                 aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static "js/CodeMirror.js" %}"></script>
+{% endblock content %}

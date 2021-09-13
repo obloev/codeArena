@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="table-responsive">
+        <table class='table table-striped'>
+            <tr>
+                <td colspan="7" class="text-center fw-bold fs-5 t-blue">
+                    Urinishlar
+                </td>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Masala</th>
+                <th>Natija</th>
+                <th>Til</th>
+                <th>Xotira</th>
+                <th>Vaqt</th>
+            </tr>
+            {% for submission in submissions %}
+                <tr>
+                    <td>
+                        {% if submission.author == request.user %}
+                            <a href="{% url 'attempt:get' submission.id %}" class="t-blue">
+                                {{ submission.id }}
+                            </a>
+                        {% else %}
+                            {{ submission.id }}
+                        {% endif %}
+                    </td>
+                    <td>{{ submission.author }}</td>
+                    <td>
+                        <a href="{% url 'problem:problem' submission.problem.id %}" class="t-blue">
+                            {{ submission.problem.title }}
+                        </a>
+                    </td>
+                    {% if submission.status_id == 3 %}
+                        <td class='t-green status'>{{ submission.status }}</td>
+                    {% else %}
+                        <td class='t-red status'>{{ submission.status }}</td>
+                    {% endif %}
+                    <td><b>{{ submission.language }}</b></td>
+                    <td>{{ submission.memory }} KB</td>
+                    <td>{{ submission.time }} ms</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

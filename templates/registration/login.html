@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="col-md-6 col-lg-6 m-auto">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <p class="text-center t-blue fs-4 fw-bold" style="margin-bottom: 10px">Kirish</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <span class="t-red">{{ form.non_field_errors }}</span>
+                    <label for="username">Foydalanuvchi nomi</label>
+                    {{ form.username }}<br><br>
+                    <span>Parol</span>
+                    {{ form.password }}
+                    <button class="btn btn-primary bg-blue w-100 fw-bold" type="submit"
+                            data-toggle="modal" data-target="#exampleModalCenter"
+                            style='margin-top: 10px'>
+                        Kirish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="col-md-8 m-auto">
+        <p class="w-100 text-center t-blue fs-5 fw-bolder">Yangi Masala Tuzish</p>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form | crispy }}
+            Testlar*
+            <table class="table">
+                <tr>
+                    <td class="text-center fw-bold">Kirish</td>
+                    <td class="text-center fw-bold">Chiqish</td>
+                </tr>
+                {% for i in rang %}
+                    <tr>
+                        <td>
+                            <textarea required name="in{{ i }}" class="mono form-control" rows="2"></textarea>
+                        </td>
+                        <td>
+                            <textarea required name="out{{ i }}" rows="2"  class="mono form-control" ></textarea>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary bg-blue" type="submit" style='margin: 10px 0 20px'>
+                    Yaratish
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

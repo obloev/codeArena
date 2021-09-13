@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-md-8 col-lg-8 m-auto">
+        <div class="card shadow bor
+            {% if submission.status_id == 3 %}bor-green{% else %}bor-red{% endif %}">
+            <div class="icon2
+                {% if submission.status_id == 3 %}t-green{% else %}t-red{% endif %}">
+                {% if submission.status_id == 3 %}
+                    <i class="fas center fa-check-circle"></i>
+                {% else %}
+                    <i class="fas center fa-times-circle"></i>
+                {% endif %}
+            </div>
+            <div class="card-body" style="padding-left: 90px;">
+                <p class="text-end fs-5
+                    {% if submission.status_id == 3 %}t-green{% else %}t-red{% endif %}">
+                    {{ submission.status }}
+                </p>
+                <div class="row text-end justify-content-end text-secondary">
+                    <div class="col-md-auto">
+                        <b>Author:</b> {{ submission.author }}
+                    </div>
+                    <div class="col-md-auto">
+                        <b>Language:</b> {{ submission.language }}
+                    </div>
+                    <div class="col-md-auto">
+                        <b>Memory:</b> {{ submission.memory }} KB
+                    </div>
+                    <div class="col-md-auto">
+                        <b>Time:</b> {{ submission.time }} ms
+                    </div>
+                </div>
+            </div>
+        </div>
+        <textarea name='code' id='editor'>{{ submission.code }}</textarea>
+        {% if submission.err != None and submission.err != '' %}
+            <div class="card shadow">
+                <div class="card-body border-0 rounded bg-red">
+                    <pre class="text-white mono m-0 p-0">{{ submission.err|linebreaksbr }}</pre>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        langs = {
+            '50': 'x-csrc',
+            '71': 'x-python',
+            '62': 'x-java',
+            '63': 'javascript',
+            '54': 'x-c++src',
+            '51': 'x-csharp',
+            '67': 'x-pascal',
+            '78': 'x-kotlin',
+            '68': 'x-php',
+        }
+        let editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+            lineNumbers: true,
+            mode: 'text/' + langs['{{ submission.lang_id }}'],
+            theme: 'ayu-dark',
+            tabSize: 4,
+            indentUnit: 4,
+            readOnly: true,
+            autocorrect: true
+        });
+    </script>
+{% endblock content %}

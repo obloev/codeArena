@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="col-md-6 col-lg-6 m-auto">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <p class="text-center t-blue fs-4 fw-bold" style="margin-bottom: 10px">
+                    Ro'yxatdan o'tish
+                </p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <span class="t-red">{{ form.non_field_errors }}</span>
+                    <span class="t-red">
+                        {% if form.errors.username %}
+                            <li>Bu foydalanuvchi nomi band</li>
+                        {% endif %}
+                        {% if form.errors.password1 or form.errors.password2 %}
+                            <li>Parol talabga javob bermaydi yoki 2 ta parol bir-biriga mos kelmadi</li>
+                        {% endif %}
+                        <br>
+                    </span>
+                    <label for="username">Foydalanuvchi nomi</label>
+                    {{ form.username }}
+                    <br><br>
+                    <span class="t-blue">
+                    <ul>
+                        <li>150 taga harf, raqam va '@', '.', '+', '-', '_' belgilarini kiritishingiz mumkin</li>
+                    </ul>
+                    </span>
+                    <span>Parol</span>
+                    {{ form.password1 }}
+                    <br><br>
+                    <span class="t-blue">
+                        <ul>
+                            <li>Parol Foydalanuvchi nomiga o'xshash bo'lmasligi kerak</li>
+                            <li>Parol kamida 8 ta belgidan iborat bo'lishi kerak</li>
+                            <li>Parol hammaga malum odatiy parol bo'lmasligi kerak</li>
+                            <li>Parol to'liq sonlardan iborat bo'lmasligi kerak</li>
+                        </ul>
+                    </span>
+                    <span style="margin-top: 10px">Parolni qayta kiriting</span>
+                    {{ form.password2 }}
+                    <br><br>
+                    <button class="btn btn-primary bg-blue w-100 fw-bold" type="submit"
+                            data-toggle="modal" data-target="#exampleModalCenter"
+                            style='margin-top: 10px'>
+                        Ro'yxatdan o'tish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
