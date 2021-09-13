@@ -36,7 +36,7 @@
             <form action="{% url 'attempt:create' %}" method='POST'>
                 {% csrf_token %}
                 <input style='display:none' value="{{ problem.id }}" name='problem_id'>
-                <select name='lang' style="margin-top: 30px;" class='form-control' onchange='changeLang()' id='langu'>
+                <select name='lang' style="margin-top: 30px;" class='form-control' id='langu'>
                     <option value='50'>C (GCC 9.2.0)</option>
                     <option value='54'>C++ (GCC 9.2.0)</option>
                     <option value='51'>C# (Mono 6.6.0.161)</option>

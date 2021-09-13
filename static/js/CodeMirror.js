@@ -20,6 +20,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
     autocorrect: true
 });
 
-function changeLang(){
+let language = document.getElementsByName('lang')[0]
+language.onchange = function (){
     editor.setOption('mode', 'text/' + langs[document.getElementById('langu').value]);
 }
