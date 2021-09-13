@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView
-from problem.forms import *
+from problem.forms import ProblemCreateForm
+from problem.models import Problem
 from django.urls import reverse
 
 
@@ -40,8 +41,7 @@ def problem_create_view(request):
             'form': form,
             'rang': range(1, 11),
         })
-    else:
-        raise Http404()
+    raise Http404()
 
 
 def all_problem(request):
@@ -56,7 +56,7 @@ def all_problem(request):
                 ac_problems.append(ac_problem.problem.id)
             if attempt:
                 attempts.append(attempt.problem.id)
-        except:
+        except ValueError:
             pass
     return render(request, 'problem/all.html', {
         'problems': problems,
