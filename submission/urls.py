@@ -1,5 +1,5 @@
 from django.urls import path
-from submission.views import *
+from submission.views import create_submission, all_submissions, get_submission
 
 app_name = 'attempt'
 

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from submission.models import Submission
 from django.shortcuts import get_object_or_404, redirect, render
-from problem.models import *
+from problem.models import Problem
 import base64
 import json
 
@@ -112,7 +112,6 @@ def create_submission(request):
             results = run(lang_id, code, problem)
             status = ''
             lang = results[0]['language']['name']
-            err = results[-1]['stderr']
             time = [0]
             memory = [0]
             status_id = 0
@@ -162,7 +161,7 @@ def create_submission(request):
                 author.save()
             return redirect(submission.get_absolute_url())
 
-        except:
+        except ValueError:
             messages.error(request, "Kod bo'sh yoki serverda xato")
             return redirect(reverse('problem:problem', args=[problem.id]))
 
@@ -173,8 +172,7 @@ def get_submission(request, pk):
         return render(request, 'submission/main.html', {
             'submission': submission,
         })
-    else:
-        return redirect(reverse('attempt:all'))
+    return redirect(reverse('attempt:all'))
 
 
 def all_submissions(request):

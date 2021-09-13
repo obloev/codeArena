@@ -10,7 +10,7 @@ langs = {
     '68': 'x-php',
 }
 
-let editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+CodeMirror.fromTextArea(document.getElementById('editor'), {
     lineNumbers: true,
     mode: 'text/' + langs['{{ submission.lang_id }}'],
     theme: 'ayu-dark',
